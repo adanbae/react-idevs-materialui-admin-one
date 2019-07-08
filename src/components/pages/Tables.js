@@ -11,7 +11,7 @@ import blue from '@material-ui/core/colors/blue';
 // 컴포넌트 분리 참조 사이트  - https://ibrahimovic.tistory.com/33
 // 컴포넌트 데이터 전달 참조 사이트 - https://ibrahimovic.tistory.com/34
 
-const useStyles = makeStyles(theme => ({
+const defaultStyle = theme => ({
   root: {
     width: '100%',
   },
@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     overflowX: 'auto',
     marginBottom: theme.spacing(2),
-    
     borderCollapse: 'collapse',
     borderRadius: '1em',
     overflow: 'hidden',
@@ -90,7 +89,80 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     marginBottom : "10px"
   }
-}));
+})
+
+const headBlueStyle = theme => ({
+  root: {
+    width: '100%',
+  },
+  paper: {
+    marginTop: theme.spacing(3),
+    width: '100%',
+    overflowX: 'auto',
+    marginBottom: theme.spacing(2),
+    borderCollapse: 'collapse',
+    borderRadius: '.5em',
+    overflow: 'hidden',
+    
+  },
+  table: {
+    minWidth: 650,
+    padding:"10px",
+  },
+  headerCell : {
+    borderBottom : "none",
+    backgroundColor: blue['A700'],
+    color : blue[50],
+    fontSize:"1rem"
+  },
+  cell : {
+    color:grey[500],
+    fontWeight:'900'
+  },
+  row: {
+    
+    '&:hover': {
+      background: grey[200],
+      '& td, & th' :{
+        color: grey[700],
+        fontWeight:"bold"
+      }
+    },
+   
+  },
+  firstCell:{
+
+  },
+  lastCell:{
+  },
+  page :{
+    float : "left",
+    width: "30px",
+    height: "30px",
+    textAlign: "center",
+    paddingTop: "4px",
+    '&:hover' :{
+      borderColor : blue[500],
+      border: "3px solid ",
+      cursor : "pointer",
+      color : blue[500],
+      fontWeight:"600"
+    }
+    
+  },
+  pages : {
+    height: "2em",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom : "10px",
+    marginTop:"10px"
+  }
+})
+
+
+const useStyles = makeStyles(defaultStyle);
+const usHeadBlueStyle = makeStyles(headBlueStyle);
 
 function createData(name, type, hours, trainer, spots) {
   return { name, type, hours, trainer, spots };
@@ -114,6 +186,7 @@ const rows = [
 export default function DenseTable() {
   
   const classes = useStyles();
+  const headColorClasses = usHeadBlueStyle();
 
   return (
     <div className={classes.root}>
@@ -134,7 +207,7 @@ export default function DenseTable() {
           React Admin 기본 테이블
         </Typography>
       <CustomeTable classes={classes} data = {rows} />
-      {/**
+      
       <Typography variant="h5" noWrap>
         테이블 2
       </Typography>
@@ -142,7 +215,8 @@ export default function DenseTable() {
       <Typography paragraph>
         테이블 설명
       </Typography>
-      <CustomeTable classes={classes} data = {rows} />
+      <CustomeTable classes={headColorClasses} data = {rows} />
+      {/**
       <Typography variant="h5" noWrap>
         테이블 3
       </Typography>
