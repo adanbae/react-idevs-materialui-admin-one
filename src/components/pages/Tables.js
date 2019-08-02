@@ -88,6 +88,12 @@ const defaultStyle = theme => ({
     alignItems: "center",
     justifyContent: "center",
     marginBottom : "10px"
+  },
+  hidden : {
+    display:"none"
+  },
+  show : {
+    display:"block"
   }
 })
 
@@ -157,15 +163,90 @@ const headBlueStyle = theme => ({
     justifyContent: "center",
     marginBottom : "10px",
     marginTop:"10px"
+  },
+  hidden : {
+    display:"none"
   }
-})
+});
+
+const noHeadColorStyle = theme => ({
+  root: {
+    width: '100%',
+  },
+  paper: {
+    marginTop: theme.spacing(3),
+    width: '100%',
+    overflowX: 'auto',
+    marginBottom: theme.spacing(2),
+    borderCollapse: 'collapse',
+    borderRadius: '.5em',
+    overflow: 'hidden',
+    
+  },
+  table: {
+    minWidth: 650,
+    padding:"10px",
+  },
+  headerCell : {
+    borderBottom : "none",
+    color : grey[900],
+    fontSize:"1rem"
+  },
+  cell : {
+    color:grey[500],
+    fontWeight:'900'
+  },
+  row: {
+    
+    '&:hover': {
+      background: grey[200],
+      '& td, & th' :{
+        color: grey[700],
+        fontWeight:"bold"
+      }
+    },
+   
+  },
+  firstCell:{
+
+  },
+  lastCell:{
+  },
+  page :{
+    float : "left",
+    width: "30px",
+    height: "30px",
+    textAlign: "center",
+    paddingTop: "4px",
+    '&:hover' :{
+      borderColor : blue[500],
+      border: "3px solid ",
+      cursor : "pointer",
+      color : blue[500],
+      fontWeight:"600"
+    }
+    
+  },
+  pages : {
+    height: "2em",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom : "10px",
+    marginTop:"10px"
+  },
+  hidden : {
+    display:"none"
+  }
+});
 
 
 const useStyles = makeStyles(defaultStyle);
-const usHeadBlueStyle = makeStyles(headBlueStyle);
+const useHeadBlueStyle = makeStyles(headBlueStyle);
+const useNoHeadColorStyle = makeStyles(noHeadColorStyle);
 
 function createData(name, type, hours, trainer, spots) {
-  return { name, type, hours, trainer, spots };
+  return { showDetail:true, name, type, hours, trainer, spots };
 }
 
 const rows = [
@@ -186,8 +267,15 @@ const rows = [
 export default function DenseTable() {
   
   const classes = useStyles();
-  const headColorClasses = usHeadBlueStyle();
+  const headColorClasses = useHeadBlueStyle();
+  const noHeadColorClasses = useNoHeadColorStyle();
 
+  const defaultOptions ={
+    useDetail:true
+  }
+  const notUseDetailOptions ={
+    useDetail:false
+  }
   return (
     <div className={classes.root}>
       <Typography variant="h3" noWrap>
@@ -206,25 +294,26 @@ export default function DenseTable() {
         <Typography paragraph>
           React Admin 기본 테이블
         </Typography>
-      <CustomeTable classes={classes} data = {rows} />
+      <CustomeTable classes={classes} data = {rows} options  = {defaultOptions} />
       
       <Typography variant="h5" noWrap>
         테이블 2
       </Typography>
       
       <Typography paragraph>
-        테이블 설명
+        테이블 헤더 컬러 지정
       </Typography>
-      <CustomeTable classes={headColorClasses} data = {rows} />
-      {/**
+      <CustomeTable classes={headColorClasses} data = {rows}  options  = {notUseDetailOptions}/>
+      
       <Typography variant="h5" noWrap>
         테이블 3
       </Typography>
       
       <Typography paragraph>
-        테이블 설명
+        테이블 헤더 컬러 없음
       </Typography>
-      <CustomeTable classes={classes} data = {rows} />
+      <CustomeTable classes={noHeadColorClasses} data = {rows} options  = {notUseDetailOptions} />
+      {/**
       <Typography variant="h5" noWrap>
         테이블 4
       </Typography>
